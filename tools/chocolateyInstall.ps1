@@ -18,13 +18,18 @@ try {
   $tempDir = "$env:TEMP\chocolatey\$($package)"
   if (![System.IO.Directory]::Exists($tempDir)) {[System.IO.Directory]::CreateDirectory($tempDir)}
 
+  if (![System.IO.Directory]::Exists("$installDir\temp")) {[System.IO.Directory]::CreateDirectory("$installDir\temp")}
+
   foreach ($file in $files) {
     $url = -join ($downloadLocation, $file, $downloadSuffix)
     $filePath = Join-Path $tempDir $file
     Get-ChocolateyWebFile "$package" "$filePath" "$url"
   Write-Host "Extracting `'$filePath`' to `'$installDir`'"
-  Start-Process "7za" -ArgumentList "x `"$filePath`" -so | 7za x -ttar -si -y -o`"$installDir`"" -Wait
+  Start-Process "7za" -ArgumentList "x -y `"$filePath`" -o`"$installDir\temp`"" -Wait  -NoNewWindow -PassThru
   }
+
+  Start-Process "7za" -ArgumentList "x -ttar -y `"$installDir\temp`" -o`"$installDir`"" -Wait  -NoNewWindow -PassThru
+  Remove-Item "$installDir\temp\"
   Copy-Item "$installDir\var\lib\mingw-get\data\defaults.xml" "$installDir\var\lib\mingw-get\data\profile.xml"
   Write-Host "Adding `'$installDir\bin`' to the path and the current shell path"
   Install-ChocolateyPath "$installDir\bin" 'machine'
