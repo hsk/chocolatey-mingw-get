@@ -1,0 +1,40 @@
+---
+package:
+- xmlns: http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd
+  metadata:
+  - id:
+    - mingw-get
+    title:
+    - mingw-get
+    version:
+    - 1.0.3
+    authors:
+    - MingW Maintainers
+    owners:
+    - Robert Coleman
+    summary:
+    - mingw-get
+    description:
+    - 'A command-line installer (mingw-get) for MinGW and MSYS deployment on MS-Windows.
+      Package Source/Issues: https://github.com/rjocoleman/chocolatey-mingw-get'
+    projectUrl:
+    - http://mingw.org
+    tags:
+    - mingw-get mingw gnu unix
+    copyright:
+    - {}
+    licenseUrl:
+    - http://www.mingw.org/license
+    requireLicenseAcceptance:
+    - 'false'
+    iconUrl:
+    - http://sourceforge.net/images/potm-2005-09_logo_mingw.gif
+    dependencies:
+    - dependency:
+      - id: 7zip.commandline
+    releaseNotes:
+    - "\n      1.0.3 Update description (only).\n    "
+  files:
+  - file:
+    - src: tools\**
+      target: tools
