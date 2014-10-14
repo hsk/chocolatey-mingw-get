@@ -17,7 +17,7 @@ try {
 
   $tempDir = "$env:TEMP\chocolatey\$($package)"
   if (![System.IO.Directory]::Exists($tempDir)) {[System.IO.Directory]::CreateDirectory($tempDir)}
-
+  
   if (![System.IO.Directory]::Exists("$installDir\temp")) {[System.IO.Directory]::CreateDirectory("$installDir\temp")}
 
   foreach ($file in $files) {
@@ -29,7 +29,7 @@ try {
   }
 
   Start-Process "7za" -ArgumentList "x -ttar -y `"$installDir\temp`" -o`"$installDir`"" -Wait  -NoNewWindow -PassThru
-  Remove-Item "$installDir\temp\"
+  Remove-Item "$installDir\temp" -Force -Recurse
   Copy-Item "$installDir\var\lib\mingw-get\data\defaults.xml" "$installDir\var\lib\mingw-get\data\profile.xml"
   Write-Host "Adding `'$installDir\bin`' to the path and the current shell path"
   Install-ChocolateyPath "$installDir\bin" 'machine'
